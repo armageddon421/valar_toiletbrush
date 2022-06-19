@@ -54,7 +54,7 @@ void API()
             
   if (wifi_set == 0) 
   {
-  WiFi.softAP(ap_ssid);
+  WiFi.softAP(ap_ssid, "brushie");
   Serial.print("IP address: ");
   Serial.println(WiFi.softAPIP());
   ip_address = WiFi.softAPIP().toString();

@@ -22,6 +22,9 @@ void setup() {
   load_preferences();
   setup_motors();
   API();
+
+  move_to_percent = startSpeed;
+
   ESPUIsetup();
   
   // Now set up tasks to run independently.
@@ -33,6 +36,8 @@ void setup() {
     ,  3  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
     ,  NULL 
     ,  1);
+
+
 }
 
 void loop()
@@ -47,6 +52,36 @@ void loop()
 void MotorTask(void *pvParameters)  // Motor Task
 {
   (void) pvParameters;
+
+  move_motor();
+  move_motor();
+  move_motor();
+  move_motor();
+
+  if(startSpeed != 0)
+  {
+    move_to_percent = startSpeed;
+    if(move_to_percent < 0)
+    {
+        stepper->setSpeedInHz(move_to_percent * -max_speed);
+        stepper->runBackward();
+    }
+    else if (move_to_percent > 0)
+    {
+        
+        stepper->setSpeedInHz(move_to_percent * max_speed);
+        stepper->runForward();
+    }else
+    {
+        stepper->stopMove();
+    }
+
+    //stepper->moveTo(move_to_step);
+    run_motor=true;
+  }
+  else{
+    stepper->stopMove();
+  }
 
   for (;;)
   {

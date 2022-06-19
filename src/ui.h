@@ -25,6 +25,14 @@ void numberAccelCall(Control* sender, int type)
     Serial.println(accel);
 }
 
+void numberStartSpeedCall(Control* sender, int type)
+{
+    startSpeed = sender->value.toInt();
+    preferences.putInt("startSpeed", startSpeed);
+    Serial.print("startSpeed: ");
+    Serial.println(startSpeed);
+}
+
 void numberCurrentCall(Control* sender, int type)
 {
     current = sender->value.toInt();
@@ -137,7 +145,7 @@ void ESPUIsetup(){
 
 //Tab1: Positioning
    //Slider: Move to position
-   uint16_t positionMax = ESPUI.addControl(ControlType::Slider, "Speed %", "0", ControlColor::Alizarin, tab1, &sliderSpeed);
+   uint16_t positionMax = ESPUI.addControl(ControlType::Slider, "Speed %", String(move_to_percent), ControlColor::Alizarin, tab1, &sliderSpeed);
    ESPUI.addControl(ControlType::Min, "", "-100", ControlColor::None, positionMax);
    ESPUI.addControl(ControlType::Max, "", "100", ControlColor::None, positionMax);
 
@@ -147,6 +155,7 @@ void ESPUIsetup(){
    //Number: Current
    speedMax = ESPUI.addControl(ControlType::Number, "Speed", String(max_speed), ControlColor::Alizarin, tab2, &numberSpeedCall);
    accelMax = ESPUI.addControl(ControlType::Number, "Acceleration", String(accel), ControlColor::Alizarin, tab2, &numberAccelCall);
+   ESPUI.addControl(ControlType::Number, "startSpeed", String(startSpeed), ControlColor::Alizarin, tab2, &numberStartSpeedCall);
    uint16_t currentMax = ESPUI.addControl(ControlType::Number, "Current(mA)", String(current), ControlColor::Alizarin, tab2, &numberCurrentCall);
    ESPUI.addControl(ControlType::Min, "", "400", ControlColor::None, currentMax);
    ESPUI.addControl(ControlType::Max, "", "2000", ControlColor::None, currentMax);
