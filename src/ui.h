@@ -58,13 +58,13 @@ void sliderSpeed(Control* sender, int type)
     move_to_percent = sender->value.toInt();
     if(move_to_percent < 0)
     {
-        stepper->setSpeedInHz(move_to_percent * -max_speed);
+        stepper->setSpeedInHz(move_to_percent * -max_speed / 100);
         stepper->runBackward();
     }
     else if (move_to_percent > 0)
     {
         
-        stepper->setSpeedInHz(move_to_percent * max_speed);
+        stepper->setSpeedInHz(move_to_percent * max_speed / 100);
         stepper->runForward();
     }else
     {

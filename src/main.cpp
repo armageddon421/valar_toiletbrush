@@ -63,13 +63,13 @@ void MotorTask(void *pvParameters)  // Motor Task
     move_to_percent = startSpeed;
     if(move_to_percent < 0)
     {
-        stepper->setSpeedInHz(move_to_percent * -max_speed);
+        stepper->setSpeedInHz(move_to_percent * -max_speed / 100);
         stepper->runBackward();
     }
     else if (move_to_percent > 0)
     {
         
-        stepper->setSpeedInHz(move_to_percent * max_speed);
+        stepper->setSpeedInHz(move_to_percent * max_speed / 100);
         stepper->runForward();
     }else
     {
