@@ -61,7 +61,7 @@ void load_preferences(){
   stall = preferences.getInt("stall", 10);
   accel = preferences.getInt("accel", 100);
   max_speed = preferences.getInt("max_speed", 100);
-  tcools = (3089838.00*pow(float(max_speed),-1.00161534))*1.5;
+  tcools = 50; //(3089838.00*pow(float(max_speed),-1.00161534))*1.5;
   open_direction =  preferences.getInt("open_dir", 0);
 
   startSpeed = preferences.getInt("startSpeed", 0);

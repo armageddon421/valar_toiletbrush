@@ -106,6 +106,21 @@ void move_motor() {
         stepper->forceStop();
         //stepper->setCurrentPosition(move_to_step);
         //stepper->moveTo(move_to_step);
+
+        if(move_to_percent < 0)
+        {
+            stepper->setSpeedInHz(move_to_percent * -max_speed / 100);
+            stepper->runBackward();
+        }
+        else if (move_to_percent > 0)
+        {
+            
+            stepper->setSpeedInHz(move_to_percent * max_speed / 100);
+            stepper->runForward();
+        }else
+        {
+            stepper->stopMove();
+        }
       }
 
       vTaskDelay(10);
@@ -137,10 +152,16 @@ void setup_motors(){
   driver.mstep_reg_select(true);
   driver.rms_current(current); 
   driver.SGTHRS(stall);
-  driver.microsteps(0);
+  driver.microsteps(16);
   driver.TCOOLTHRS(tcools); // 
   driver.TPWMTHRS(0);
-  driver.semin(0);
+  driver.semin(5);
+  driver.semax(5);
+
+  driver.pwm_autograd(true);
+  driver.pwm_autoscale(true);
+  driver.irun(16);
+  driver.ihold(10);
   
   if (open_direction == 1)
   {
